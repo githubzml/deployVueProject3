@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div style="position: absolute; width: 100%; top: 0px; bottom: 0px;" id="canvas"></div>
+    <script src="./qunee-min.js"></script>
+    <script>
+        var graph = new Q.Graph(canvas);
+
+        var node2 = graph.createNode("002", 200, -150);
+        var node4 = graph.createNode("004", -200, 150);
+
+
+        function createEdge(from, to, type, lineWidth, color) {
+            var edge = graph.createEdge("", from, to);
+            edge.setStyle(Q.Styles.EDGE_COLOR, color || "#000");
+            edge.setStyle(Q.Styles.EDGE_WIDTH, lineWidth || 2);
+            edge.setStyle(Q.Styles.ARROW_TO, false);
+            edge.setStyle(Q.Styles.ARROW_FROM, false);
+            edge.edgeType = type || Q.Consts.EDGE_TYPE_DEFAULT;
+            return edge;
+        }
+        var edge4 = createEdge(node2, node4);
+        var edge5 = createEdge(node4, node2);
+
+        var label1 = new Q.LabelUI();
+        label1.position = Q.Position.LEFT_BOTTOM;
+        label1.anchorPosition = Q.Position.LEFT_BOTTOM;
+        label1.offsetX = 10;
+        edge4.addUI(label1, {
+            bindingProperty: "data",
+            property: "leftLabel",
+            propertyType: Q.Consts.PROPERTY_TYPE_STYLE
+        });
+
+        var label2 = new Q.LabelUI();
+        label2.position = Q.Position.RIGHT_BOTTOM;
+        label2.anchorPosition = Q.Position.RIGHT_TOP;
+        label2.color="red";
+        label2.offsetX = -10;
+        edge5.addUI(label2, {
+            bindingProperty: "data",
+            property: "rightLabel",
+            propertyType: Q.Consts.PROPERTY_TYPE_STYLE
+        });
+
+
+        edge4.setStyle("leftLabel", "1");
+        // edge4.setStyle(Q.Styles.EDGE_BUNDLE_LABEL_COLOR, "red");
+        // edge4.setStyle(
+        //     Q.Styles.LABEL_COLOR,
+        //     "red"
+        // );
+        edge5.setStyle("rightLabel", "2");
+    </script>
+</body>
+
+</html>
